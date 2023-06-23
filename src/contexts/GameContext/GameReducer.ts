@@ -58,8 +58,7 @@ const GameReducerInner = (state: GameState, action: GameActions): GameState => {
         return state
       }
 
-      // not 100% sure this will work
-      const newCards = [...state.cards]
+      const newCards = [...state.cards.map((c) => ({ ...c }))]
       let isMatch = false
 
       // Determine if we're after 2nd move - check if 2 identical cards were found, set isGuessed
