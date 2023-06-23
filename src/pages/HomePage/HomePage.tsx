@@ -11,7 +11,7 @@ export const HomePage: FC = () => (
         Vite React App
       </Typography>
       <Typography variant="subtitle1" fontWeight={600} color={Colors.Rufous}>
-        It&apos;s sooooo fast... :)
+        It&apos;s sooooo fast...
       </Typography>
 
       <RocketIcon onClick={() => window.alert('To Infinity and Beyond!!')} />
