@@ -7,8 +7,17 @@ export const GameReducer = (state: GameState, action: GameActions): GameState =>
       return { ...state, cards: state.cards }
 
     case 'FlipCard':
-      // flip a card
-      return state
+      return {
+        ...state,
+        movesCounter: state.movesCounter + 1,
+        cards: state.cards.map((c) => {
+          if (c.id !== action.cardId) {
+            return c
+          }
+
+          return { ...c, isFlipped: !c.isFlipped }
+        }),
+      }
 
     default:
       return state

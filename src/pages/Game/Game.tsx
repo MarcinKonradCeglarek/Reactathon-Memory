@@ -4,17 +4,23 @@ import './Game.css'
 
 export const Game: FC = () => {
   const gameContext = useContext(GameContext)
-
   return (
     <div className="container">
-      {gameContext.cards.map((c) => (
-        <div className="flip-card" key={c.id}>
-          <div className="flip-card-inner">
-            <div className="flip-card-front">Placeholder</div>
-            <div className="flip-card-back">{c.symbol}</div>
+      {gameContext.cards.map((c) => {
+        const cardClasses = c.isFlipped || c.isGuessed ? 'flip-card flipped' : 'flip-card'
+        return (
+          <div
+            className={cardClasses}
+            key={c.id}
+            onClick={() => gameContext.dispatch({ type: 'FlipCard', cardId: c.id })}
+          >
+            <div className="flip-card-inner">
+              <div className="flip-card-front">Placeholder</div>
+              <div className="flip-card-back">{c.symbol}</div>
+            </div>
           </div>
-        </div>
-      ))}
+        )
+      })}
     </div>
   )
 }
