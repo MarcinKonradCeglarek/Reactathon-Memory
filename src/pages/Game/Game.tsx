@@ -1,6 +1,7 @@
 import { GameContext } from '@/contexts/GameContext/GameContext'
 import { FC, useContext } from 'react'
 import './Game.css'
+import { GameFeeback } from '@/contexts/GameContext/GameTypes'
 
 export const Game: FC = () => {
   const gameContext = useContext(GameContext)
@@ -29,7 +30,21 @@ export const Game: FC = () => {
           )
         })}
       </div>
-      <div className="hud">{gameContext.movesCounter}</div>
+      <div className="hud">
+        {gameContext.movesCounter} {gameContext.feedback}
+      </div>
+
+      {gameContext.feedback === GameFeeback.Miss && (
+        <div className="feedback miss">🥺😱😵😹💩👾😲</div>
+      )}
+
+      {gameContext.feedback === GameFeeback.Match && (
+        <div className="feedback match">🤗😉😜☺️🤑🤠</div>
+      )}
+
+      {gameContext.feedback === GameFeeback.GameWon && (
+        <div className="feedback win">Winner winner, chichen dinner 🧐</div>
+      )}
     </div>
   )
 }

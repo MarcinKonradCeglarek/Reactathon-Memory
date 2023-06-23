@@ -1,7 +1,6 @@
-import { GameActions, GameState } from './GameTypes'
+import { GameActions, GameFeeback, GameState } from './GameTypes'
 
 export const GameReducer = (state: GameState, action: GameActions): GameState => {
-  console.log('before: ', state)
   console.log('action: ', action)
   const result = GameReducerInner(state, action)
   console.log('after: ', result)
@@ -53,27 +52,33 @@ const GameReducerInner = (state: GameState, action: GameActions): GameState => {
 
       // not 100% sure this will work
       const newCards = [...state.cards]
+      let isMatch = false
 
       // Determine if we're after 2nd move - check if 2 identical cards were found, set isGuessed
-      if (state.flippedCards[0] !== undefined && state.flippedCards[1] !== undefined) {
-        if (
-          newCards[state.flippedCards[0]].symbol ===
-          newCards[state.flippedCards[1]].symbol
-        ) {
-          newCards[state.flippedCards[0]].isGuessed = true
-          newCards[state.flippedCards[1]].isGuessed = true
-        }
+      if (
+        state.flippedCards[0] !== undefined &&
+        state.flippedCards[1] !== undefined &&
+        newCards[state.flippedCards[0]].symbol === newCards[state.flippedCards[1]].symbol
+      ) {
+        newCards[state.flippedCards[0]].isGuessed = true
+        newCards[state.flippedCards[1]].isGuessed = true
+        isMatch = true
       }
+
+      const isGameWon = newCards.every((c) => c.isGuessed)
 
       return {
         ...state,
         cards: newCards,
         flippedCards: [undefined, undefined],
-        waitForTurn: false,
+        waitForTurn: isGameWon,
+        feedback: GetGameFeedback(isGameWon, isMatch),
       }
     default:
       return state
   }
 }
 
-// Flip cards action
+const GetGameFeedback = (isGameWon: boolean, isMatch: boolean) => {
+  return isGameWon ? GameFeeback.GameWon : isMatch ? GameFeeback.Match : GameFeeback.Miss
+}

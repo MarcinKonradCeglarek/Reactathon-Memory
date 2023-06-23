@@ -3,12 +3,18 @@ type Card = {
   symbol: string
 }
 
+export enum GameFeeback {
+  Match,
+  Miss,
+  GameWon,
+}
 export type GameState = {
   cards: Array<Card>
   flippedCards: [number | undefined, number | undefined]
   startTime: Date
   movesCounter: number
   waitForTurn: boolean
+  feedback?: GameFeeback
 }
 
 type StartGame = {
