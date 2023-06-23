@@ -8,10 +8,6 @@ export const Game: FC = () => {
   const navigate = useNavigate()
   const gameContext = useContext(GameContext)
 
-  useEffect(() => {
-    gameContext.dispatch({ type: 'StartGame' })
-  }, [])
-
   return (
     <div className="wrapper">
       <div className="gridContainer">
@@ -50,7 +46,9 @@ export const Game: FC = () => {
       {gameContext.feedback === GameFeeback.GameWon && (
         <>
           <div className="feedback win">🏆🥇</div>
-          <button className="victoryButton" onClick={() => navigate('/')}>
+          <button className="victoryButton" onClick={() => {
+            gameContext.dispatch({ type: 'StartGame' });
+            navigate('/')}}>
             Go home, your're drunk
           </button>
         </>
