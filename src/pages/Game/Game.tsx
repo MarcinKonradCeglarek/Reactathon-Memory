@@ -1,10 +1,17 @@
 import { GameContext } from '@/contexts/GameContext/GameContext'
-import { FC, useContext } from 'react'
+import { FC, useContext, useEffect } from 'react'
 import './Game.css'
 import { GameFeeback } from '@/contexts/GameContext/GameTypes'
+import { useNavigate } from 'react-router-dom'
 
 export const Game: FC = () => {
+  const navigate = useNavigate()
   const gameContext = useContext(GameContext)
+
+  useEffect(() => {
+    gameContext.dispatch({ type: 'StartGame' })
+  }, [])
+
   return (
     <div className="wrapper">
       <div className="gridContainer">
@@ -30,9 +37,7 @@ export const Game: FC = () => {
           )
         })}
       </div>
-      <div className="hud">
-        {gameContext.movesCounter} {gameContext.feedback}
-      </div>
+      <div className="hud">Moves: {gameContext.movesCounter}</div>
 
       {gameContext.feedback === GameFeeback.Miss && (
         <div className="feedback miss">😹💩</div>
@@ -43,7 +48,12 @@ export const Game: FC = () => {
       )}
 
       {gameContext.feedback === GameFeeback.GameWon && (
-        <div className="feedback win">🏆🥇</div>
+        <>
+          <div className="feedback win">🏆🥇</div>
+          <button className="victoryButton" onClick={() => navigate('/')}>
+            Go home, your're drunk
+          </button>
+        </>
       )}
     </div>
   )

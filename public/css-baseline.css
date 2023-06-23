@@ -2,9 +2,14 @@ html,  body, #root {
     font-family: 'Lato', sans-serif;
     box-sizing: border-box;
     height: 100dvh;
-    background: gray;
     user-select: none;
     overflow: hidden;
+}
+
+body {
+    background-image: url("/freebackground.jpg");
+    background-size: cover;
+    background-position: 50% 50%;
 }
 
 ::-webkit-scrollbar {

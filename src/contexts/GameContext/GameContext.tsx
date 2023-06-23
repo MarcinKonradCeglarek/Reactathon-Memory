@@ -2,7 +2,7 @@ import { FC, ReactElement, createContext, useReducer } from 'react'
 import { GameActions, GameState } from './GameTypes'
 import { GameReducer } from './GameReducer'
 
-const initialState: GameState = {
+export const initialState: GameState = {
   cards: [
     '🍺',
     '🍻',
