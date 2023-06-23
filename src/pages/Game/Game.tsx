@@ -7,23 +7,29 @@ export const Game: FC = () => {
   return (
     <div className="wrapper">
       <div className="gridContainer">
-        {gameContext.cards.map((c) => {
+        {gameContext.cards.map((c, idx) => {
           const cardClasses =
-            c.isFlipped || c.isGuessed ? 'flip-card flipped' : 'flip-card'
+            gameContext.flippedCards.includes(idx) || c.isGuessed
+              ? 'flip-card flipped'
+              : 'flip-card'
           return (
             <div
               className={cardClasses}
-              key={c.id}
-              onClick={() => gameContext.dispatch({ type: 'FlipCard', cardId: c.id })}
+              key={idx}
+              onClick={() => {
+                gameContext.dispatch({ type: 'FlipCard', cardIdx: idx })
+                setTimeout(() => gameContext.dispatch({ type: 'FlipCardReaction' }), 2000)
+              }}
             >
               <div className="flip-card-inner">
-                <div className="flip-card-front">Placeholder</div>
+                <div className="flip-card-front">🍍</div>
                 <div className="flip-card-back">{c.symbol}</div>
               </div>
             </div>
           )
         })}
       </div>
+      <div className="hud">{gameContext.movesCounter}</div>
     </div>
   )
 }

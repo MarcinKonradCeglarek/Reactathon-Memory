@@ -2,7 +2,8 @@ html,  body, #root {
     font-family: 'Lato', sans-serif;
     box-sizing: border-box;
     height: 100dvh;
-    background: gray
+    background: gray;
+    user-select: none;
 }
 
 ::-webkit-scrollbar {
