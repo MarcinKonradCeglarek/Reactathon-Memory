@@ -34,6 +34,7 @@
     width: 200px;
     height: 200px;
     perspective: 1000px; /* Remove this if you don't want the 3D effect */
+    z-index: 100;
   }
   
   /* This container is needed to position the front and back side */
@@ -94,11 +95,18 @@
     font-size: 6rem;
     transition: 400ms;
     opacity: 0.9;
-    animation: shimmer .8s alternate 3 ease-in-out;
+    animation: shimmer .4s alternate 2 ease-in-out;
     animation-fill-mode: forwards;
   }
 
   @keyframes shimmer {
-    from{transform: rotate(-20deg); z-index: 100}
-    to{transform: rotate(20deg) scale(6); opacity: 0; z-index:-1 }
+    from{transform: rotate(-20deg); opacity: 0;}
+    to{transform: rotate(20deg) scale(6);  opacity: 1; }
   }
+
+  .win {
+    z-index: 120;
+    animation: shimmer 2s alternate infinite ease-in-out;
+
+  }
+  

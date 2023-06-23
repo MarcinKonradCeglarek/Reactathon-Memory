@@ -43,6 +43,7 @@ const GameReducerInner = (state: GameState, action: GameActions): GameState => {
         movesCounter: state.movesCounter + 1,
         flippedCards: newFlippedCards,
         waitForTurn: newFlippedCards[1] !== undefined,
+        feedback: undefined,
       }
 
     case 'FlipCardReaction':

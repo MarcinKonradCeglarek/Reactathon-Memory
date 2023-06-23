@@ -35,15 +35,15 @@ export const Game: FC = () => {
       </div>
 
       {gameContext.feedback === GameFeeback.Miss && (
-        <div className="feedback miss">🥺😱😵😹💩👾😲</div>
+        <div className="feedback miss">😹💩</div>
       )}
 
       {gameContext.feedback === GameFeeback.Match && (
-        <div className="feedback match">🤗😉😜☺️🤑🤠</div>
+        <div className="feedback match">🤗🤑</div>
       )}
 
       {gameContext.feedback === GameFeeback.GameWon && (
-        <div className="feedback win">Winner winner, chichen dinner 🧐</div>
+        <div className="feedback win">🏆🥇</div>
       )}
     </div>
   )
