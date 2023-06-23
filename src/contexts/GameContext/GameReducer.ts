@@ -17,7 +17,7 @@ const GameReducerInner = (state: GameState, action: GameActions): GameState => {
         cards: initialState.cards
           .map((c) => ({ val: c, order: Math.random() }))
           .sort((a, b) => a.order - b.order)
-          .map((o) => o.val),
+          .map((o) => ({ ...o.val })),
       }
 
     case 'FlipCard':
