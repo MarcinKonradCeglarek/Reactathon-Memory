@@ -8,6 +8,7 @@ export type GameState = {
   flippedCards: [number | undefined, number | undefined]
   startTime: Date
   movesCounter: number
+  waitForTurn: boolean
 }
 
 type StartGame = {

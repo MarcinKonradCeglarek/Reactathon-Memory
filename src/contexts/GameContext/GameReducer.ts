@@ -17,7 +17,11 @@ const GameReducerInner = (state: GameState, action: GameActions): GameState => {
     case 'FlipCard':
       // if card is flipped or guessed: return
       const targetCard = state.cards[action.cardIdx]
-      if (state.flippedCards[0] === action.cardIdx || targetCard.isGuessed) {
+      if (
+        state.flippedCards[0] === action.cardIdx ||
+        targetCard.isGuessed ||
+        state.waitForTurn
+      ) {
         return state
       }
 
@@ -35,9 +39,18 @@ const GameReducerInner = (state: GameState, action: GameActions): GameState => {
         newFlippedCards[1] = action.cardIdx
       }
 
-      return { ...state, flippedCards: newFlippedCards }
+      return {
+        ...state,
+        movesCounter: state.movesCounter + 1,
+        flippedCards: newFlippedCards,
+        waitForTurn: newFlippedCards[1] !== undefined,
+      }
 
     case 'FlipCardReaction':
+      if (state.flippedCards[1] === undefined) {
+        return state
+      }
+
       // not 100% sure this will work
       const newCards = [...state.cards]
 
@@ -54,9 +67,9 @@ const GameReducerInner = (state: GameState, action: GameActions): GameState => {
 
       return {
         ...state,
-        movesCounter: state.movesCounter + 1,
         cards: newCards,
         flippedCards: [undefined, undefined],
+        waitForTurn: false,
       }
     default:
       return state

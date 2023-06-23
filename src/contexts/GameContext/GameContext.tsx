@@ -25,6 +25,7 @@ const initialState: GameState = {
     isGuessed: false,
   })),
   flippedCards: [undefined, undefined],
+  waitForTurn: false,
   startTime: new Date(),
   movesCounter: 0,
 }
@@ -36,6 +37,7 @@ export const GameContext = createContext<
   flippedCards: [undefined, undefined],
   startTime: new Date(),
   movesCounter: 0,
+  waitForTurn: false,
   dispatch: () => undefined,
 })
 
