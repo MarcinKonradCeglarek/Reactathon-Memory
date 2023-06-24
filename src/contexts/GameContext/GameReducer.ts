@@ -32,7 +32,7 @@ const GameReducerInner = (state: GameState, action: GameActions): GameState => {
             return { ...c, isFlipped: false }
           }
 
-          return c
+          return { ...c }
         }
 
         return { ...c, isFlipped: true }
