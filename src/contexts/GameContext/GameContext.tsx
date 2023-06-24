@@ -23,9 +23,8 @@ export const initialState: GameState = {
   ].map((symbol) => ({
     symbol: symbol,
     isGuessed: false,
+    isFlipped: false,
   })),
-  flippedCards: [undefined, undefined],
-  waitForTurn: false,
   startTime: new Date(),
   movesCounter: 0,
 }
@@ -34,10 +33,8 @@ export const GameContext = createContext<
   GameState & { dispatch: React.Dispatch<GameActions> }
 >({
   cards: [],
-  flippedCards: [undefined, undefined],
   startTime: new Date(),
   movesCounter: 0,
-  waitForTurn: false,
   dispatch: () => undefined,
 })
 

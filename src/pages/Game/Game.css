@@ -56,6 +56,11 @@
   .flip-card.flipped .flip-card-inner {
     transform: rotateY(180deg);
   }
+
+  .flip-card.guessed .flip-card-inner {
+    transform: scale(0.9) rotateY(180deg);
+    opacity: 0.7;
+  }
   
   /* Position the front and back side */
   .flip-card-front, .flip-card-back {
@@ -99,7 +104,6 @@
     translate: -50% -50%;
     font-size: 6rem;
     transition: 400ms;
-    opacity: 0.9;
     animation: shimmer .4s alternate 2 ease-in-out;
     animation-fill-mode: forwards;
   }

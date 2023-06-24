@@ -1,5 +1,6 @@
 import { initialState } from './GameContext'
-import { GameActions, GameFeeback, GameState } from './GameTypes'
+import { GameActions, GameState } from './GameTypes'
+import { ProcessGame as ProcessGameAndMutateDeck, shuffleArray } from './GameUtils'
 
 export const GameReducer = (state: GameState, action: GameActions): GameState => {
   console.log('action: ', action)
@@ -11,81 +12,55 @@ export const GameReducer = (state: GameState, action: GameActions): GameState =>
 const GameReducerInner = (state: GameState, action: GameActions): GameState => {
   switch (action.type) {
     case 'StartGame':
-      // shuffle cards here
       return {
         ...initialState,
-        cards: initialState.cards
-          .map((c) => ({ val: c, order: Math.random() }))
-          .sort((a, b) => a.order - b.order)
-          .map((o) => ({ ...o.val })),
+        cards: shuffleArray(initialState.cards),
       }
 
     case 'FlipCard':
       // if card is flipped or guessed: return
       const targetCard = state.cards[action.cardIdx]
-      if (
-        state.flippedCards[0] === action.cardIdx ||
-        targetCard.isGuessed ||
-        state.waitForTurn
-      ) {
+      if (targetCard.isFlipped || targetCard.isGuessed) {
         return state
       }
-
-      const newFlippedCards: [number | undefined, number | undefined] = [
-        ...state.flippedCards,
-      ]
 
       // Flip card
-      if (state.flippedCards[0] === undefined && state.flippedCards[1] === undefined) {
-        newFlippedCards[0] = action.cardIdx
-      } else if (
-        state.flippedCards[0] !== undefined &&
-        state.flippedCards[1] === undefined
-      ) {
-        newFlippedCards[1] = action.cardIdx
-      }
+      const twoCardsAlreadyFlipped = state.cards.filter((c) => c.isFlipped).length >= 2
+      const newCards = state.cards.map((c, i) => {
+        if (i !== action.cardIdx) {
+          if (twoCardsAlreadyFlipped) {
+            return { ...c, isFlipped: false }
+          }
 
-      return {
-        ...state,
-        movesCounter: state.movesCounter + 1,
-        flippedCards: newFlippedCards,
-        waitForTurn: newFlippedCards[1] !== undefined,
-        feedback: undefined,
-      }
+          return c
+        }
 
-    case 'FlipCardReaction':
-      if (state.flippedCards[1] === undefined) {
-        return state
-      }
+        return { ...c, isFlipped: true }
+      })
 
-      const newCards = [...state.cards.map((c) => ({ ...c }))]
-      let isMatch = false
-
-      // Determine if we're after 2nd move - check if 2 identical cards were found, set isGuessed
-      if (
-        state.flippedCards[0] !== undefined &&
-        state.flippedCards[1] !== undefined &&
-        newCards[state.flippedCards[0]].symbol === newCards[state.flippedCards[1]].symbol
-      ) {
-        newCards[state.flippedCards[0]].isGuessed = true
-        newCards[state.flippedCards[1]].isGuessed = true
-        isMatch = true
-      }
-
-      const isGameWon = newCards.every((c) => c.isGuessed)
+      const feedback = ProcessGameAndMutateDeck(newCards)
 
       return {
         ...state,
         cards: newCards,
-        flippedCards: [undefined, undefined],
-        waitForTurn: isGameWon,
-        feedback: GetGameFeedback(isGameWon, isMatch),
+        movesCounter: state.movesCounter + 1,
+        feedback,
+      }
+
+    case 'UnFlipCards':
+      const newUnflippedCards = state.cards.map((c, i) => {
+        if (action.cards.includes(i)) {
+          return { ...c, isFlipped: false }
+        }
+
+        return c
+      })
+
+      return {
+        ...state,
+        cards: newUnflippedCards,
       }
     default:
       return state
   }
-}
-
-const GetGameFeedback = (isGameWon: boolean, isMatch: boolean) => {
-  return isGameWon ? GameFeeback.GameWon : isMatch ? GameFeeback.Match : GameFeeback.Miss
 }

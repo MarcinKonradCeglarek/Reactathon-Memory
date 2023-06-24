@@ -1,5 +1,6 @@
-type Card = {
+export type Card = {
   isGuessed: boolean
+  isFlipped: boolean
   symbol: string
 }
 
@@ -10,10 +11,8 @@ export enum GameFeeback {
 }
 export type GameState = {
   cards: Array<Card>
-  flippedCards: [number | undefined, number | undefined]
   startTime: Date
   movesCounter: number
-  waitForTurn: boolean
   feedback?: GameFeeback
 }
 
@@ -26,8 +25,9 @@ type FlipCard = {
   cardIdx: number
 }
 
-type FlipCardReaction = {
-  type: 'FlipCardReaction'
+type UnFlipCards = {
+  type: 'UnFlipCards'
+  cards: number[]
 }
 
-export type GameActions = StartGame | FlipCard | FlipCardReaction
+export type GameActions = StartGame | FlipCard | UnFlipCards
