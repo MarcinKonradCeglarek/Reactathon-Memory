@@ -1,16 +1,30 @@
-import { FC } from 'react'
-import { CenteredContent } from '@/components/CenteredContent/CenteredContent'
-import { MainPageWrapper, RocketIcon } from './HomePage.styles'
+import { FC, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import './HomePage.css'
 
 export const HomePage: FC = () => {
+  const [go, setGo] = useState(false)
   const navigate = useNavigate()
 
+  useEffect(() => {
+    if (go) {
+      const timer = setTimeout(() => navigate('/game'), 2000)
+      return () => clearTimeout(timer)
+    }
+  }, [go])
+
   return (
-    <MainPageWrapper>
-      <CenteredContent>
-        <RocketIcon onClick={() => navigate('/game')} />
-      </CenteredContent>
-    </MainPageWrapper>
+    <main className="MainPageWrapper">
+      <div className={['Centered', go ? 'go' : ''].join(' ')}>
+        <button
+          className={['RocketIcon', go ? 'go' : ''].join(' ')}
+          onClick={() => setGo(true)}
+        >
+          <div className="background">
+            <div className="rocket">🚀</div>
+          </div>
+        </button>
+      </div>
+    </main>
   )
 }
