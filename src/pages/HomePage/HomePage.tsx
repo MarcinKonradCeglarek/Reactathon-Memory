@@ -8,7 +8,7 @@ export const HomePage: FC = () => {
 
   useEffect(() => {
     if (go) {
-      const timer = setTimeout(() => navigate('/game'), 2000)
+      const timer = setTimeout(() => navigate('/game'), 1500)
       return () => clearTimeout(timer)
     }
   }, [go])

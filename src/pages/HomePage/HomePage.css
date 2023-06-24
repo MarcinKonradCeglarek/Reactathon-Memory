@@ -60,7 +60,7 @@
 }
 
 .RocketIcon.go .rocket {
-    animation: gradient 15s ease-in-out infinite, jitter 1s linear infinite, start 2.2s ease-in;
+    animation: gradient 15s ease-in-out infinite, jitter 1s linear infinite, start 2.2s ease-in-out;
 }
 
 
@@ -113,10 +113,13 @@
 }
 
 @keyframes start {
-    50% {
-        transform: translate(0, 0) rotate(-1deg);
+    0% {
+        transform: translate(0, 0);
     }
-    100% {
+    10% {
+        transform: translate(-10%, +10%);
+    }
+    40% {
         transform: translate(+150%, -150%);
     }
 }
