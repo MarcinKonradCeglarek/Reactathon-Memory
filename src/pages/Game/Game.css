@@ -17,7 +17,8 @@
 .victoryButton, .hud{
   position: absolute;
   padding: 8px 24px;
-  background-color: white;
+  background: rgb(255,143,0);
+  background: linear-gradient(141deg, rgba(255,143,0,1) 0%, rgba(243,252,69,1) 100%);
   color: red;
   display: flex;
   font-weight: bold;
@@ -25,9 +26,9 @@
   font-family: 'Comic Sans MS';
   align-items: center;
   z-index: 200;
-  border: 16px solid aqua;
+  border: 16px solid white;
   border-radius: 16px;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
   box-shadow: 12px 12px 12px rgba(0, 0, 0, 0.4);
 }
 
@@ -47,7 +48,8 @@
 }
 
 .victoryButton:hover {
-  transform: scale(1.5)
+  transform: scale(1.5);
+  box-shadow: 18px 18px 18px rgba(0, 0, 0, 0.4);
 }
 
 
@@ -69,21 +71,22 @@
     text-align: center;
     transition: transform 0.4s;
     transform-style: preserve-3d;
-    opacity: 1
+    opacity: 1;
+    transform: rotateY(180deg);
   }
   
   /* Do an horizontal flip when you move the mouse over the flip box container */
   .flip-card:hover:not(.flipped):not(.guessed) .flip-card-inner {
-    transform: scale(1.1);
+    transform: scale(1.1) rotateY(180deg);
   }
 
   .flip-card.flipped .flip-card-inner {
-    transform: rotateY(180deg);
+    transform: rotateY(0deg);
   }
 
   .flip-card.guessed .flip-card-inner {
-    transform: scale(0.9) rotateY(180deg);
-    /* opacity: 0.7; */
+    transform: scale(0.9) rotateY(0deg);
+    opacity: 0.7;
   }
   
   /* Position the front and back side */
@@ -103,23 +106,17 @@
     
   }
   
-  /* Style the front side (fallback if image is missing) */
   .flip-card-front {
     color: black;
     background: rgb(53,0,255);
-    background: radial-gradient(circle, rgba(53,0,255,1) 0%, rgba(252,69,222,1) 100%);
-    /* background-color: #e5e5f7;
-    background-image:  linear-gradient(135deg, #444cf7 25%, transparent 25%), linear-gradient(225deg, #444cf7 25%, transparent 25%), linear-gradient(45deg, #444cf7 25%, transparent 25%), linear-gradient(315deg, #444cf7 25%, #e5e5f7 25%);
-    background-position:  10px 0, 10px 0, 0 0, 0 0;
-    background-size: 10px 10px;
-    background-repeat: repeat; */
+    background: radial-gradient(circle, rgba(252,69,222,1) 0%, rgba(53,0,255,1) 100%);
+    transform: rotateY(180deg);
   }
   
-  /* Style the back side */
   .flip-card-back {
     background: rgb(255,143,0);
     background: radial-gradient(circle, rgba(255,143,0,1) 0%, rgba(243,252,69,1) 100%);
-    transform: rotateY(180deg);
+    
   }
 
   .feedback {
@@ -129,17 +126,25 @@
     translate: -50% -50%;
     font-size: 6rem;
     transition: 400ms;
-    animation: shimmer .4s alternate 2 ease-in-out;
+    animation: jump .4s alternate 2 ease-in-out;
     animation-fill-mode: forwards;
-  }
-
-  @keyframes shimmer {
-    from{transform: rotate(-20deg); opacity: 0;}
-    to{transform: rotate(20deg) scale(6);  opacity: 1; }
   }
 
   .win {
     z-index: 120;
-    animation: shimmer 1.5s alternate infinite ease-in-out;
+    animation: bounce 1.5s alternate infinite ease-in-out;
   }
+
+  @keyframes jump {
+    from{transform: rotate(-20deg); opacity: 0;}
+    to{transform: rotate(20deg) scale(6);  opacity: 1; }
+  }
+
+  @keyframes bounce {
+    from{transform: rotate(-20deg); }
+    to{transform: rotate(20deg) scale(6); }
+  }
+
+
+
 
