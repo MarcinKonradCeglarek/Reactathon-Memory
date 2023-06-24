@@ -4,12 +4,30 @@ import './Game.css'
 import { GameFeeback } from '@/contexts/GameContext/GameTypes'
 import { useNavigate } from 'react-router-dom'
 
+function GetRandomElement<T>(input: T[]): T {
+  const id = Math.floor(Math.random() * input.length)
+  return input[id]
+}
+
 export const Game: FC = () => {
+  const positiveAudio = [new Audio('/nice.mp3'), new Audio('./wow.mp3')]
+  const negativeAudio = [new Audio('/windows_error.mp3')]
+  const winGameAudio = [new Audio('/anime-wow.mp3')]
+
   const navigate = useNavigate()
   const gameContext = useContext(GameContext)
 
   useEffect(() => {
+    if (gameContext.feedback === GameFeeback.GameWon) {
+      GetRandomElement(winGameAudio).play()
+    }
+
+    if (gameContext.feedback === GameFeeback.Match) {
+      GetRandomElement(positiveAudio).play()
+    }
+
     if (gameContext.feedback === GameFeeback.Miss) {
+      GetRandomElement(negativeAudio).play()
       const flippedCards = gameContext.cards
         .map((c, i) => ({
           card: c,
