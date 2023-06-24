@@ -6,6 +6,16 @@
     height: 100%
 }
 
+.FadeOut {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    z-index: 300;
+    animation: fadeout 1s ease-in;
+    animation-fill-mode: both;
+}
+
 .gridContainer {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -140,4 +150,9 @@
 @keyframes bounce {
     from{transform: rotate(-20deg); }
     to{transform: rotate(20deg) scale(6); }
+}
+
+@keyframes fadeout {
+  from{opacity: 1 }
+  to{opacity: 0}
 }

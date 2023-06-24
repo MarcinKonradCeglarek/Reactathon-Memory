@@ -1,5 +1,5 @@
 import { GameContext } from '@/contexts/GameContext/GameContext'
-import { FC, useContext, useEffect } from 'react'
+import { FC, useContext, useEffect, useState } from 'react'
 import './Game.css'
 import { GameFeeback } from '@/contexts/GameContext/GameTypes'
 import { useNavigate } from 'react-router-dom'
@@ -10,12 +10,19 @@ function GetRandomElement<T>(input: T[]): T {
 }
 
 export const Game: FC = () => {
+  const [showFader, setShowFader] = useState(true)
+
   const positiveAudio = [new Audio('/nice.mp3'), new Audio('./wow.mp3')]
   const negativeAudio = [new Audio('/windows_error.mp3')]
   const winGameAudio = [new Audio('/anime-wow.mp3')]
 
   const navigate = useNavigate()
   const gameContext = useContext(GameContext)
+
+  useEffect(() => {
+    const timer = setTimeout(() => setShowFader(false), 1000)
+    return () => clearTimeout(timer)
+  }, [showFader])
 
   useEffect(() => {
     if (gameContext.feedback === GameFeeback.GameWon) {
@@ -77,6 +84,7 @@ export const Game: FC = () => {
       </div>
       <div className="hud">Moves: {gameContext.movesCounter}</div>
 
+      {showFader && <div className="FadeOut"></div>}
       {gameContext.feedback === GameFeeback.Miss && (
         <div className="feedback miss">😹💩</div>
       )}

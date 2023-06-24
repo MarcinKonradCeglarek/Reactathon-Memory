@@ -1,7 +1,26 @@
 .MainPageWrapper {
+    position: relative;
     height: 100vh;
     width: 100vw;
     overflow: hidden;
+}
+
+.FadeIn {
+    display: none;
+    position: absolute;
+    top: 0;
+    left:0;
+    width: 100%;    
+    height: 100%;
+    opacity: 0;
+    background-color: white;
+    animation-fill-mode: both;
+}
+
+.FadeIn.go {
+    display: block;
+    animation: fadeInFromNone 1.5s ease-out;
+    animation-fill-mode: both;
 }
 
 .Centered {
@@ -121,5 +140,22 @@
     }
     40% {
         transform: translate(+150%, -150%);
+    }
+}
+
+@keyframes fadeInFromNone {
+    0% {
+        display: none;
+        opacity: 0;
+    }
+
+    60% {
+        display: block;
+        opacity: 0;
+    }
+
+    100% {
+        display: block;
+        opacity: 1;
     }
 }
