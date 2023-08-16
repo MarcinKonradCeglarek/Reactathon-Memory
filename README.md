@@ -1,6 +1,7 @@
 # A simple memory game, with drinks theme ;)
 
-This was created during React-othlon prepared by Will Chadwick
+This was created during React-othlon prepared by Will Chadwick. You can give it a go [HERE](https://marcinkonradceglarek.github.io/)
+
 ![Ractathon memory preview](memory-preview.png)
 
 ## Installation
